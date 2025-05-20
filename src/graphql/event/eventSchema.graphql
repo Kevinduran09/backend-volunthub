@@ -1,0 +1,28 @@
+type categoria{
+    id:ID!
+    nombre:String!
+    descripcion:String!
+
+}
+type Ubicacion{
+    latitud:String!
+    longitud:String!
+}
+type Evento{
+    id:ID!
+    titulo:String!
+    descripcion:String!
+    fecha:String!
+    hora_inicio:String!
+    zona:String!
+    created_at:String
+    ubicacion:Ubicacion!
+    requiere_voluntarios:Boolean!
+    image_url:String
+}
+
+type Query{
+    eventos:[Evento]
+    evento(id:ID!):Evento
+}
+
