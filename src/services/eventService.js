@@ -12,7 +12,7 @@ export async function getEventById(idEvent) {
     .select("*")
     .eq("id", idEvent)
     .single();
-
+    
   if (error) return new Error(error.message);
 
   return data;
