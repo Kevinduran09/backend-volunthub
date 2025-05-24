@@ -8,10 +8,7 @@ import { v1 as uuid } from "uuid";
 
 import { createClient } from "@supabase/supabase-js";
 import pc from "picocolors";
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANO_KEY;
-
-export const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from "./src/config/supabaseClient.js";
 const users = [
   {
     id: "1",

@@ -24,5 +24,7 @@ type Evento{
 type Query{
     eventos:[Evento]
     evento(id:ID!):Evento
+    # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion 
 }
 
+# Faltan las mutaciones para crear, actualizar y eliminar eventos

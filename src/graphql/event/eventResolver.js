@@ -1,4 +1,5 @@
 import * as eventService from "../../services/eventService.js";
+
 export const eventResolver = {
   Query: {
     eventos: () => {
@@ -15,4 +16,5 @@ export const eventResolver = {
       }
     }
   }
+  
 };
