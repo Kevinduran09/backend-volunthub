@@ -24,10 +24,4 @@ export const typeDefs = mergeTypeDefs(loadTypeDefs());
 
 // Combinar todos los resolvers
 
-export const rootResolver = mergeResolvers([
-  eventResolver,
-  userResolver
-]);
-
 export const rootResolver = mergeResolvers([eventResolver, taskResolver]);
-

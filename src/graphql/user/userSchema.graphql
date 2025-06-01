@@ -5,6 +5,7 @@ type Usuario {
   correo: String!
   contrasena: String!
   created_at: String
+  eventosInscritos:[Evento]
 }
 
 #solo obtener informacion de las tablas

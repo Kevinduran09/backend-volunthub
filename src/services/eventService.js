@@ -4,6 +4,7 @@ export async function getEvents(busqueda) {
   const { data, error } = await supabase.rpc("get_eventos", {
     search_term: busqueda,
   });
+  console.log(data);
 
   if (error) return new Error(error.message);
   return data;
