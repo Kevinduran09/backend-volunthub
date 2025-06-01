@@ -15,18 +15,6 @@ type Evento {
   hora_inicio: String!
   zona: String!
   created_at: String
-
-  ubicacion: Ubicacion!
-  requiere_voluntarios: Boolean!
-  image_url: String
-}
-
-type Query {
-  eventos: [Evento]
-  evento(id: ID!): Evento
-  eventosPorCategoria(categoriaId: ID!): [Evento]
-  # Falta la query para obtener los eventos por ubicacion y los eventos por usuario
-
   direccion: String
   ubicacion: Ubicacion
   requiere_voluntarios: Boolean!
