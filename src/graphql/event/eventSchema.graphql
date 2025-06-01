@@ -2,12 +2,13 @@ type categoria{
     id:ID!
     nombre:String!
     descripcion:String!
-
 }
+
 type Ubicacion{
     latitud:String!
     longitud:String!
 }
+
 type Evento{
     id:ID!
     titulo:String!
@@ -28,3 +29,35 @@ type Query{
 }
 
 # Faltan las mutaciones para crear, actualizar y eliminar eventos
+
+type Subscription {
+  tareaCompletada: NotificacionTarea
+  cambioEstadoEvento: NotificacionEvento
+  eventoProximoComenzar: NotificacionProximoEvento
+}
+
+type NotificacionTarea {
+  tareaId: ID!
+  titulo: String!
+  completada_por: Usuario!
+  fecha_completado: String!
+}
+
+type NotificacionEvento {
+  eventoId: ID!
+  nombre: String!
+  estado: String!
+  fecha_cambio: String!
+}
+
+type NotificacionProximoEvento {
+  eventoId: ID!
+  nombre: String!
+  fecha_inicio: String!
+  tiempo_restante: Int!
+}
+
+type Usuario {
+  id: ID!
+  nombre: String!
+}
