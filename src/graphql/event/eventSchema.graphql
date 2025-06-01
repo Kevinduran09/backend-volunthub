@@ -4,6 +4,7 @@ type categoria {
   descripcion: String!
 }
 
+
 type Tarea {
   id: ID!
   titulo: String!
@@ -13,10 +14,12 @@ type Tarea {
   created_at: String
 }
 
+
 type Ubicacion {
   latitud: String!
   longitud: String!
 }
+
 type Evento {
   id: ID!
   titulo: String!
@@ -41,6 +44,7 @@ type Participantes {
   id_evento: ID!
   fecha_inscripcion: String!
 }
+
 type Query {
   eventos(busqueda: String): [Evento]
   evento(id: ID!): Evento
@@ -48,9 +52,11 @@ type Query {
   eventosCercanos(lat: Float!, lon: Float!, radio: Int): [Evento]
   # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion
 }
+
 type Mutation {
   createEvent(input: CreateEventInput!): Evento!
 }
+
 input CreateEventInput {
   titulo: String!
   descripcion: String!
@@ -80,4 +86,36 @@ input TareaInput {
   prioridad: String!
   descripcion: String!
   estado: String!
+}
+
+type Subscription {
+  tareaCompletada: NotificacionTarea
+  cambioEstadoEvento: NotificacionEvento
+  eventoProximoComenzar: NotificacionProximoEvento
+}
+
+type NotificacionTarea {
+  tareaId: ID!
+  titulo: String!
+  completada_por: Usuario!
+  fecha_completado: String!
+}
+
+type NotificacionEvento {
+  eventoId: ID!
+  nombre: String!
+  estado: String!
+  fecha_cambio: String!
+}
+
+type NotificacionProximoEvento {
+  eventoId: ID!
+  nombre: String!
+  fecha_inicio: String!
+  tiempo_restante: Int!
+}
+
+type Usuario {
+  id: ID!
+  nombre: String!
 }
