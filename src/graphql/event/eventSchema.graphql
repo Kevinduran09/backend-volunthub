@@ -1,30 +1,30 @@
-type categoria{
-    id:ID!
-    nombre:String!
-    descripcion:String!
+type categoria {
+  id: ID!
+  nombre: String!
+  descripcion: String!
+}
+type Ubicacion {
+  latitud: String!
+  longitud: String!
+}
+type Evento {
+  id: ID!
+  titulo: String!
+  descripcion: String!
+  fecha: String!
+  hora_inicio: String!
+  zona: String!
+  created_at: String
+  ubicacion: Ubicacion!
+  requiere_voluntarios: Boolean!
+  image_url: String
+}
 
-}
-type Ubicacion{
-    latitud:String!
-    longitud:String!
-}
-type Evento{
-    id:ID!
-    titulo:String!
-    descripcion:String!
-    fecha:String!
-    hora_inicio:String!
-    zona:String!
-    created_at:String
-    ubicacion:Ubicacion!
-    requiere_voluntarios:Boolean!
-    image_url:String
-}
-
-type Query{
-    eventos:[Evento]
-    evento(id:ID!):Evento
-    # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion 
+type Query {
+  eventos: [Evento]
+  evento(id: ID!): Evento
+  eventosPorCategoria(categoriaId: ID!): [Evento]
+  # Falta la query para obtener los eventos por ubicacion y los eventos por usuario
 }
 
 # Faltan las mutaciones para crear, actualizar y eliminar eventos
