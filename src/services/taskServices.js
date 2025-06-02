@@ -28,11 +28,11 @@ export async function completarTarea(idTarea, idUsuario) {
   return true;
 }
 
-export async function getTareasPorEvento(eventId) {
+export async function getTareasPorEvento(eventoId) {
   const { data, error } = await supabase
     .from("tareas")
     .select("*")
-    .eq("evento_id", eventId);
+    .eq("evento_id", eventoId);
 
   if (error) throw new Error(error.message);
   return data;

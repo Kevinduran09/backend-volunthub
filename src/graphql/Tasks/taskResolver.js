@@ -2,8 +2,8 @@ import * as taskService from "../../services/taskServices.js";
 
 export const taskResolver = {
   Query: {
-    getTareasPorEvento: async (_, { eventId }) => {
-      const tareas = await taskService.getTareasPorEvento(eventId);
+    getTareasPorEvento: async (_, { eventoId }) => {
+      const tareas = await taskService.getTareasPorEvento(eventoId);
       return tareas;
     },
   },

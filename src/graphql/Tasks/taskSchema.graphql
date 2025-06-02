@@ -3,5 +3,5 @@ type Mutation {
 }
 
 type Query {
-  getTareasPorEvento(eventId: ID!): [Tarea]
+  getTareasPorEvento(eventoId: ID!): [Tarea]
 }
