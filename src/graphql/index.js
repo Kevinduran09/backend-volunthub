@@ -1,5 +1,9 @@
 import { eventResolver } from "./event/eventResolver.js";
+
+import { userResolver } from "./user/userResolver.js";
+
 import { taskResolver } from "./Tasks/taskResolver.js";
+
 import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
 import { readFileSync } from "fs";
 import pkg from "glob";
@@ -19,4 +23,11 @@ const loadTypeDefs = () => {
 export const typeDefs = mergeTypeDefs(loadTypeDefs());
 
 // Combinar todos los resolvers
+
+export const rootResolver = mergeResolvers([
+  eventResolver,
+  userResolver
+]);
+
 export const rootResolver = mergeResolvers([eventResolver, taskResolver]);
+

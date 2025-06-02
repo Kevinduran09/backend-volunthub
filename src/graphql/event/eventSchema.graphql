@@ -35,6 +35,7 @@ type Evento {
   distancia_m: Float
   tareas: [Tarea]
 }
+
 type Participantes {
   id_usuario: ID!
   id_evento: ID!
