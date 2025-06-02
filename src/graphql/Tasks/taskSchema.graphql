@@ -1,0 +1,7 @@
+type Mutation {
+  completarTarea(idTarea: ID!, idUsuario: ID!): Boolean!
+}
+
+type Query {
+  getTareasPorEvento(eventoId: ID!): [Tarea]
+}

@@ -4,6 +4,7 @@ export async function getEvents(busqueda) {
   const { data, error } = await supabase.rpc("get_eventos", {
     search_term: busqueda,
   });
+
   if (error) return new Error(error.message);
   return data;
 }
@@ -25,11 +26,23 @@ export async function getEventosCercanos(lat, lon, radio = 5000) {
     p_radius_m: radio,
   });
   console.log(error);
+  if (error) return new Error(error.message);
+  return data;
+}
+
+export async function getEventsByCategory(category) {
+  const { data, error } = await supabase
+    .from("eventos")
+    .select("*")
+    .eq("categoria", category);
 
   if (error) return new Error(error.message);
 
   return data;
 }
+
+export async function name(params) {}
+
 export async function getParticipantes(idEvent) {
   const { data, error } = await supabase
     .from("inscripciones")

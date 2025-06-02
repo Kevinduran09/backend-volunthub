@@ -5,14 +5,16 @@ import pc from "picocolors";
 const PORT = process.env.PORT || 9001;
 
 async function startServer() {
-    const app = startExpress()
-    await startApollo(app)
+  const app = startExpress();
+  await startApollo(app);
 
-    const server = createServer(app)
-    server.listen(PORT, () => {
-        console.log(pc.magenta(`GraphQL disponible en http://localhost:${PORT}/graphql`))
-        console.log(pc.blue(`Servidor corriendo en http://localhost:${PORT}`))
-    })
+  const server = createServer(app);
+  server.listen(PORT, () => {
+    console.log(
+      pc.magenta(`GraphQL disponible en http://localhost:${PORT}/graphql`)
+    );
+    console.log(pc.blue(`Servidor corriendo en http://localhost:${PORT}`));
+  });
 }
 
-startServer()
+startServer();
