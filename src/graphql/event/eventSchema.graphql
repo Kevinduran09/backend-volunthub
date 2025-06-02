@@ -24,6 +24,7 @@ type Evento {
   participantes_inscritos: Int
   distancia_m: Float
 }
+
 type Participantes {
   id_usuario: ID!
   id_evento: ID!
