@@ -1,0 +1,25 @@
+
+type Usuario {
+  id: ID!
+  nombre: String!
+  correo: String!
+  contrasena: String!
+  created_at: String
+}
+
+#solo obtener informacion de las tablas
+type Query {
+  usuario(id: ID!): Usuario
+  usuarios(busqueda: String): [Usuario]
+}
+
+
+type Mutation {
+  createUser(input: CreateUserInput!): Usuario!
+}
+
+input CreateUserInput {
+  nombre: String!
+  correo: String!
+  contrasena: String!
+}

@@ -49,6 +49,7 @@ export async function getTareasPorEvento(eventoId) {
     .eq("evento_id", eventoId);
 
   if (error) throw new Error(error.message);
-  
+
   return data;
 }
+

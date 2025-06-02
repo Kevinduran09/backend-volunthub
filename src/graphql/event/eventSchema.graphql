@@ -4,6 +4,17 @@ type categoria {
   descripcion: String!
 }
 
+
+type Tarea {
+  id: ID!
+  titulo: String!
+  estado: String!
+  completada_por: ID
+  event_id: ID!
+  created_at: String
+}
+
+
 type Ubicacion {
   latitud: String!
   longitud: String!
@@ -25,6 +36,7 @@ type Evento {
   participantes: [Participantes]
   participantes_inscritos: Int
   distancia_m: Float
+  tareas: [Tarea]
 }
 
 type Participantes {
