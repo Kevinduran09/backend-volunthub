@@ -2,13 +2,12 @@ type categoria{
     id:ID!
     nombre:String!
     descripcion:String!
-}
 
+}
 type Ubicacion{
     latitud:String!
     longitud:String!
 }
-
 type Evento{
     id:ID!
     titulo:String!
@@ -27,8 +26,39 @@ type Query{
     evento(id:ID!):Evento
     # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion 
 }
+type Mutation {
+  createEvent(input: CreateEventInput!): Evento!
+}
+input CreateEventInput {
+  titulo: String!
+  descripcion: String!
+  fecha: String!
+  hora_inicio: String!
+  zona: String
+  direccion: String!
+  ubicacion: UbicacionInput!
+  requiere_voluntarios: Boolean!
+  cantidad_participantes_requeridos: Int
+  image_url: String
+  categoria: String!
+  materiales_requeridos: String
+  habilidades_requeridas: String
+  requisitos_adicionales: String
+  organizador_id: ID!
+  tareas: [TareaInput!]
+}
 
-# Faltan las mutaciones para crear, actualizar y eliminar eventos
+input UbicacionInput {
+  latitud: Float!
+  longitud: Float!
+}
+
+input TareaInput {
+  nombre: String!
+  prioridad: String!
+  descripcion: String!
+  estado: String!
+}
 
 type Subscription {
   tareaCompletada: NotificacionTarea
