@@ -27,3 +27,13 @@ export async function completarTarea(idTarea, idUsuario) {
   if (error) throw new Error(error.message);
   return true;
 }
+
+export async function getTareasPorEvento(eventoId) {
+  const { data, error } = await supabase
+    .from("tareas")
+    .select("*")
+    .eq("evento_id", eventoId);
+
+  if (error) throw new Error(error.message);
+  return data;
+}

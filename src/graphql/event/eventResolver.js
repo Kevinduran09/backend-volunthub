@@ -7,8 +7,9 @@ export const eventResolver = {
       const events = eventService.getEvents(busqueda);
       return events;
     },
-    evento: ({ id }) => eventService.getEventById(id),
-
+    evento: (_, { id }) => {
+      return eventService.getEventById(id);
+    },
     eventosPorCategoria: ({ categoriaId }) => {
       return eventService.getEventsByCategory(categoriaId);
     },
@@ -31,6 +32,10 @@ export const eventResolver = {
     participantes_inscritos: (root) => {
       const participantes_inscritos = eventService.getCantdadInscritos(root.id);
       return participantes_inscritos;
+    },
+    tareas: async (root) => {
+      const tareas = await taskService.getTareasPorEvento(root.id);
+      return tareas;
     },
   },
   Mutation: {
