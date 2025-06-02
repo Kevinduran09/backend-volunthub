@@ -1,34 +1,50 @@
-type categoria{
-    id:ID!
-    nombre:String!
-    descripcion:String!
-
-}
-type Ubicacion{
-    latitud:String!
-    longitud:String!
-}
-type Evento{
-    id:ID!
-    titulo:String!
-    descripcion:String!
-    fecha:String!
-    hora_inicio:String!
-    zona:String!
-    created_at:String
-    ubicacion:Ubicacion!
-    requiere_voluntarios:Boolean!
-    image_url:String
+type categoria {
+  id: ID!
+  nombre: String!
+  descripcion: String!
 }
 
-type Query{
-    eventos:[Evento]
-    evento(id:ID!):Evento
-    # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion 
+type Ubicacion {
+  latitud: String!
+  longitud: String!
 }
+
+type Evento {
+  id: ID!
+  titulo: String!
+  descripcion: String!
+  fecha: String!
+  hora_inicio: String!
+  zona: String!
+  created_at: String
+  direccion: String
+  ubicacion: Ubicacion
+  requiere_voluntarios: Boolean!
+  cantidad_participantes_requeridos: Int
+  image_url: String
+  participantes: [Participantes]
+  participantes_inscritos: Int
+  distancia_m: Float
+}
+
+type Participantes {
+  id_usuario: ID!
+  id_evento: ID!
+  fecha_inscripcion: String!
+}
+
+type Query {
+  eventos(busqueda: String): [Evento]
+  evento(id: ID!): Evento
+  eventosPorCategoria(categoria: String!): [Evento]
+  eventosCercanos(lat: Float!, lon: Float!, radio: Int): [Evento]
+  # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion
+}
+
 type Mutation {
   createEvent(input: CreateEventInput!): Evento!
 }
+
 input CreateEventInput {
   titulo: String!
   descripcion: String!

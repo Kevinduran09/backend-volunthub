@@ -1,4 +1,6 @@
 import { supabase } from "../config/supabaseClient.js";
+import { pubsub } from "../subscriptions/index.js";
+import { TAREA_COMPLETADA } from "../subscriptions/eventSubscriptions.js";
 
 export async function createTasksForEvent(tasks, eventId) {
   if (!tasks || tasks.length === 0) return;
@@ -25,5 +27,18 @@ export async function completarTarea(idTarea, idUsuario) {
     .eq("id", idTarea);
 
   if (error) throw new Error(error.message);
+
+  await pubsub.publish(TAREA_COMPLETADA, {
+    tareaCompletada: {
+      tareaId: data.id,
+      titulo: data.titulo,
+      completada_por: {
+        id: idUsuario,
+        nombre: nombre,
+      },
+      fecha_completado: new Date().toISOString(),
+    },
+  });
+
   return true;
 }
