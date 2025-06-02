@@ -1,4 +1,4 @@
-import { supabase } from "../config/supabaseClient";
+import { supabase } from "../config/supabaseClient.js";
 
 export async function getUserById(idUser) {
     const { data, error } = await supabase
@@ -8,15 +8,14 @@ export async function getUserById(idUser) {
         .single();
     if (error) return new Error(error.message);
 
-    console.log("Usuario encontrado:", data);
     
     return data;
 }
 
 export async function getUsers(busqueda) {
-  const { data, error } = await supabase.rpc("get_usuarios", {
-    search_term: busqueda,
-  });
+  const { data, error } = await supabase.from("usuarios").select("*");
+ 
+  
   if (error) return new Error(error.message);
   return data;
 }

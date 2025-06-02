@@ -6,6 +6,8 @@ export const userResolver = {
     Query: {
 
         usuarios: (root, { busqueda }) => {
+            debugger
+            console.log(busqueda);
             const users = userService.getUsers(busqueda);
             return users;
         },
