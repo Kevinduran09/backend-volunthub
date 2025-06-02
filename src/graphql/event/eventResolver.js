@@ -32,6 +32,10 @@ export const eventResolver = {
       const participantes_inscritos = eventService.getCantdadInscritos(root.id);
       return participantes_inscritos;
     },
+    tareas: async (root) => {
+      const tareas = await taskService.getTasksByEventId(root.id);
+      return tareas;
+    },
   },
   Mutation: {
     createEvent: async (root, { input }) => {
