@@ -9,15 +9,15 @@ const { glob } = pkg;
 // Función para cargar los archivos de tipo GraphQL
 const loadTypeDefs = () => {
   const files = glob.sync("src/graphql/**/*.graphql");
-  const typeDefs = files.map((file) => {
-    const content = readFileSync(file, "utf-8");
-    return content;
-  });
-  return typeDefs;
+  return files.map(file => readFileSync(file, "utf-8"));
 };
 
 // Exportar los typeDefs combinados
 export const typeDefs = mergeTypeDefs(loadTypeDefs());
 
 // Combinar todos los resolvers
-export const rootResolver = mergeResolvers([eventResolver, taskResolver, eventSubscriptions]);
+export const rootResolver = mergeResolvers([
+  eventResolver,
+  taskResolver,
+  eventSubscriptions
+]);

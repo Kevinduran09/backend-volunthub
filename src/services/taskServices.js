@@ -18,27 +18,37 @@ export async function createTasksForEvent(tasks, eventId) {
 }
 
 export async function completarTarea(idTarea, idUsuario) {
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("tareas")
     .update({
       estado: "completada",
       completada_por: idUsuario,
     })
-    .eq("id", idTarea);
+    .eq("id", idTarea).select().single();
 
   if (error) throw new Error(error.message);
 
   await pubsub.publish(TAREA_COMPLETADA, {
     tareaCompletada: {
-      tareaId: data.id,
+      tareaId: idTarea,
       titulo: data.titulo,
       completada_por: {
         id: idUsuario,
-        nombre: nombre,
       },
       fecha_completado: new Date().toISOString(),
     },
   });
 
   return true;
+}
+
+export async function getTareasPorEvento(eventoId) {
+  const { data, error } = await supabase
+    .from("tareas")
+    .select("*")
+    .eq("evento_id", eventoId);
+
+  if (error) throw new Error(error.message);
+  
+  return data;
 }
