@@ -1,18 +1,16 @@
 import * as eventService from "../../services/eventService.js";
+import * as taskService from "../../services/taskServices.js";
 
 export const eventResolver = {
   Query: {
-    eventos: () => {
-      const events = eventService.getEvents();
-      return events;
-    },
-    evento: ({ id }) => eventService.getEventById(id),
-    eventosPorCategoria: ({ categoriaId }) => {
-      return eventService.getEventsByCategory(categoriaId);
-    },
     eventos: (root, { busqueda }) => {
       const events = eventService.getEvents(busqueda);
       return events;
+    },
+    evento: ({ id }) => eventService.getEventById(id),
+
+    eventosPorCategoria: ({ categoriaId }) => {
+      return eventService.getEventsByCategory(categoriaId);
     },
     eventosCercanos: (root, { lat, lon, radio }) => {
       const events = eventService.getEventosCercanos(lat, lon, radio);
@@ -38,6 +36,11 @@ export const eventResolver = {
   Mutation: {
     createEvent: async (root, { input }) => {
       const evento = await eventService.createEvent(input);
+      if (input.tareas && input.tareas.length > 0) {
+        await taskService.createTasksForEvent(input.tareas, evento.id);
+      }
+      console.log(input);
+      console.log(evento);
       return evento;
     },
   },

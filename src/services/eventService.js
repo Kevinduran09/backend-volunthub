@@ -1,11 +1,5 @@
 import { supabase } from "../config/supabaseClient.js";
 
-export async function getEvents() {
-  const { data, error } = await supabase.rpc("get_eventos_latlng");
-  if (error) return new Error(error.message);
-  return data;
-}
-
 export async function getEvents(busqueda) {
   const { data, error } = await supabase.rpc("get_eventos", {
     search_term: busqueda,
