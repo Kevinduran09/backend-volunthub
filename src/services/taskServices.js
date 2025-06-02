@@ -1,6 +1,7 @@
 import { supabase } from "../config/supabaseClient.js";
 import { pubsub } from "../subscriptions/index.js";
 import { TAREA_COMPLETADA } from "../subscriptions/eventSubscriptions.js";
+import { EVENTO_CAMBIO_ESTADO } from "../subscriptions/eventSubscriptions.js";
 
 export async function createTasksForEvent(tasks, eventId) {
   if (!tasks || tasks.length === 0) return;
@@ -24,7 +25,9 @@ export async function completarTarea(idTarea, idUsuario) {
       estado: "completada",
       completada_por: idUsuario,
     })
-    .eq("id", idTarea).select().single();
+    .eq("id", idTarea)
+    .select()
+    .single();
 
   if (error) throw new Error(error.message);
 
@@ -39,10 +42,21 @@ export async function completarTarea(idTarea, idUsuario) {
     },
   });
 
+  const { data: evento, error: eventoError } = await supabase
+    .from("eventos")
+    .select("id, titulo")
+    .eq("id", data.evento_id)
+    .single();
+
+  if (eventoError) throw new Error(eventoError.message);
+
+  await verificarEventoCompletado(evento.id, evento.titulo);
+
   return true;
 }
 
-export async function getTareasPorEvento(eventoId) {
+
+export async function verificarEventoCompletado(eventoId, nombreEvento) {
   const { data, error } = await supabase
     .from("tareas")
     .select("*")
@@ -50,6 +64,24 @@ export async function getTareasPorEvento(eventoId) {
 
   if (error) throw new Error(error.message);
 
-  return data;
-}
+  let tareasEvento = data;
 
+  let todasCompletadas = true;
+
+  tareasEvento.forEach(t => {
+    if (t.estado !== "completada") {
+      todasCompletadas = false;
+    }
+  });
+
+  if (todasCompletadas) {
+    await pubsub.publish(EVENTO_CAMBIO_ESTADO, {
+      cambioEstadoEvento: {
+        eventoId,
+        nombre: nombreEvento,
+        estado: "completado",
+        fecha_cambio: new Date().toISOString()
+      }
+    });
+  }
+}
