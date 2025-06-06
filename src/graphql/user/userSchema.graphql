@@ -1,17 +1,21 @@
 
+
+
 type Usuario {
   id: ID!
   nombre: String!
   correo: String!
   contrasena: String!
   created_at: String
-  eventosInscritos:[Evento]
 }
+
+
 
 #solo obtener informacion de las tablas
 type Query {
   usuario(id: ID!): Usuario
   usuarios(busqueda: String): [Usuario]
+  eventosInscritosPorUsuario(idUsuario: ID!): [Evento]
 }
 
 

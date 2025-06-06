@@ -2,6 +2,9 @@ import * as userService from "../../services/userService.js";
 
 export const userResolver = {
     Query: {
+        usuario: async (root, { id }) => {
+            return await userService.getUserById(id);
+        },
         usuarios: (root, { busqueda }) => {
             debugger;
             console.log(busqueda);
@@ -9,13 +12,11 @@ export const userResolver = {
             return users;
         },
 
-        usuario: async (root, { id }) => {
-            return await userService.getUserById(id);
+        eventosInscritosPorUsuario: async (root, { idUsuario }) => {
+            return await userService.getEventosInscritosPorUsuario(idUsuario);
         },
     },
-    Usuario: {
-        eventosInscritos: (root) => { },
-    },
+
 
     Mutation: {
         createUser: async (root, { input }) => {
