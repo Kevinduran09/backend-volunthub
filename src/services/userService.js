@@ -8,16 +8,16 @@ export async function getUserById(idUser) {
         .single();
     if (error) return new Error(error.message);
 
-    
+
     return data;
 }
 
 export async function getUsers(busqueda) {
-  const { data, error } = await supabase.from("usuarios").select("*");
- 
-  
-  if (error) return new Error(error.message);
-  return data;
+    const { data, error } = await supabase.from("usuarios").select("*");
+
+
+    if (error) return new Error(error.message);
+    return data;
 }
 
 export async function createUser(input) {
@@ -36,3 +36,28 @@ export async function createUser(input) {
     if (error) return new Error(error.message);
     return data;
 }
+
+export async function updateUser(id, input) {
+    const { data, error } = await supabase
+        .from("usuarios")
+        .update(input)
+        .eq("id", id)
+        .select("id, nombre, correo, contrasena")
+        .single();
+
+    if (error) return new Error(error.message);
+    return data;
+}
+
+export async function deleteUser(id) {
+  const { data, error } = await supabase
+    .from("usuarios")
+    .delete()
+    .eq("id", id)
+    .select("id, nombre, correo")
+    .single();
+
+  if (error) return new Error(error.message);
+  return data;
+}
+
