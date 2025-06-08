@@ -46,6 +46,30 @@ export async function getEventosCercanos(lat, lon, radio = 5000) {
   return data;
 }
 
+export async function getUsuariosInscritosPorEvento(idEvento) {
+  
+  const { data: inscripciones, error: errorInscripciones } = await supabase
+    .from("inscripciones")
+    .select("id_usuario")
+    .eq("id_evento", idEvento);
+
+  if (errorInscripciones) throw new Error(errorInscripciones.message);
+
+  if (!inscripciones || inscripciones.length === 0) {
+    return [];
+  }
+
+  const idsUsuarios = inscripciones.map((insc) => insc.id_usuario);
+  const { data: usuarios, error: errorUsuarios } = await supabase
+    .from("usuarios")
+    .select("*")
+    .in("id", idsUsuarios);
+
+  if (errorUsuarios) throw new Error(errorUsuarios.message);
+
+  return usuarios;
+}
+
 export async function getEventsByCategory(category) {
   const { data, error } = await supabase
     .from("eventos")

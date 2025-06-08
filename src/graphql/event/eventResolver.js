@@ -19,6 +19,10 @@ export const eventResolver = {
       const events = eventService.getEventosCercanos(lat, lon, radio);
       return events;
     },
+
+    UsuariosInscritosAUnEvento: async (root, { idEvento }) => {
+      return await eventService.getUsuariosInscritosPorEvento(idEvento);
+    },
   },
   Evento: {
     ubicacion: async (root) => {

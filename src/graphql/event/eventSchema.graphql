@@ -35,6 +35,7 @@ type Evento {
   categoria: Categoria
 }
 
+
 type Participantes {
   id_usuario: ID!
   id_evento: ID!
@@ -49,6 +50,7 @@ type Query {
   evento(id: ID!): Evento
   eventosPorCategoria(categoria: String!): [Evento]
   eventosCercanos(lat: Float!, lon: Float!, radio: Int): [Evento]
+  UsuariosInscritosAUnEvento(idEvento: ID!): [Usuario] 
   # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion
 }
 type Inscripcion{
