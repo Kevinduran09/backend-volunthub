@@ -4,18 +4,23 @@ import { ApolloServer } from "apollo-server-express";
 import { useServer } from "graphql-ws/lib/use/ws";
 import { WebSocketServer } from "ws";
 import { createServer } from "http";
+import {  getUserContext } from "../middlewares/authMiddleware.js";
 
 export async function startApollo(app) {
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers: rootResolver,
+    
   });
 
   const httpServer = createServer(app);
 
   const server = new ApolloServer({
     schema,
-    context: ({ req }) => ({ req }),
+    context: async ({ req }) => {
+    const context = await getUserContext(req);
+    return context;
+  },
     plugins: [{
       async serverWillStart() {
         return {

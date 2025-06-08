@@ -1,3 +1,21 @@
+type Tarea {
+  id: ID!
+  titulo: String!
+  descripcion: String!
+  estado: String!
+  prioridad: String!
+  completada_por: ID
+  evento_id: ID!
+  created_at: String
+}
+
+input TareaInput {
+  nombre: String!
+  prioridad: String!
+  descripcion: String!
+  estado: String!
+}
+
 type Mutation {
   completarTarea(idTarea: ID!, idUsuario: ID!): Boolean!
 }

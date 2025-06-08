@@ -7,13 +7,22 @@ export const EVENTO_PROXIMO = "EVENTO_PROXIMO";
 export const eventSubscriptions = {
     Subscription: {
         tareaCompletada: {
-            subscribe: () => pubsub.asyncIterator([TAREA_COMPLETADA]),
+            subscribe: (_, { userId, eventId }) => {
+                const channel = `${TAREA_COMPLETADA}:${eventId}`;
+                return pubsub.asyncIterator(channel);
+            },
         },
         cambioEstadoEvento: {
-            subscribe: () => pubsub.asyncIterator([EVENTO_CAMBIO_ESTADO]),
+            subscribe: (_, { userId, eventId }) => {
+                const channel = `${EVENTO_CAMBIO_ESTADO}:${eventId}`;
+                return pubsub.asyncIterator(channel);
+            },
         },
         eventoProximoComenzar: {
-            subscribe: () => pubsub.asyncIterator([EVENTO_PROXIMO]),
+            subscribe: (_, { userId, eventId }) => {
+                const channel = `${EVENTO_PROXIMO}:${eventId}`;
+                return pubsub.asyncIterator(channel);
+            },
         },
     },
 };

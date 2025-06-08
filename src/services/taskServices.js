@@ -17,7 +17,15 @@ export async function createTasksForEvent(tasks, eventId) {
 
   if (error) throw new Error(error.message);
 }
-
+export async function getTareasPorEvento(eventoId) {
+  const { data, error } = await supabase
+    .from("tareas")
+    .select("*")
+    .eq("evento_id", eventoId);
+  console.log('data',data);
+  if (error) throw new Error(error.message);
+  return data;
+}
 export async function completarTarea(idTarea, idUsuario) {
   const { data, error } = await supabase
     .from("tareas")
@@ -30,8 +38,8 @@ export async function completarTarea(idTarea, idUsuario) {
     .single();
 
   if (error) throw new Error(error.message);
-
-  await pubsub.publish(TAREA_COMPLETADA, {
+  console.log(data);
+  await pubsub.publish(`${TAREA_COMPLETADA}:${data.evento_id}`, {
     tareaCompletada: {
       tareaId: idTarea,
       titulo: data.titulo,
@@ -55,7 +63,6 @@ export async function completarTarea(idTarea, idUsuario) {
   return true;
 }
 
-
 export async function verificarEventoCompletado(eventoId, nombreEvento) {
   const { data, error } = await supabase
     .from("tareas")
@@ -68,20 +75,20 @@ export async function verificarEventoCompletado(eventoId, nombreEvento) {
 
   let todasCompletadas = true;
 
-  tareasEvento.forEach(t => {
+  tareasEvento.forEach((t) => {
     if (t.estado !== "completada") {
       todasCompletadas = false;
     }
   });
 
   if (todasCompletadas) {
-    await pubsub.publish(EVENTO_CAMBIO_ESTADO, {
+    await pubsub.publish(`${EVENTO_CAMBIO_ESTADO}:${eventoId}`, {
       cambioEstadoEvento: {
         eventoId,
         nombre: nombreEvento,
         estado: "completado",
-        fecha_cambio: new Date().toISOString()
-      }
+        fecha_cambio: new Date().toISOString(),
+      },
     });
   }
 }

@@ -1,15 +1,28 @@
 import { supabase } from "../config/supabaseClient.js";
 
 export async function getEvents(busqueda) {
-  const { data, error } = await supabase.rpc("get_eventos", {
-    search_term: busqueda,
-  });
-  console.log(data);
+  let query = supabase.from("eventos").select("*");
+
+  if (busqueda && busqueda.trim() !== "") {
+    query = query.ilike("titulo", `%${busqueda}%`);
+  }
+
+  const { data, error } = await query;
 
   if (error) return new Error(error.message);
   return data;
 }
 
+export async function get_ubication(event_id) {
+  const { data, error } = await supabase
+    .rpc("get_ubication_to_event", {
+      event_id: event_id,
+    })
+    .single();
+
+  if (error) return new Error(error.message);
+  return data;
+}
 export async function getEventById(idEvent) {
   const { data, error } = await supabase
     .from("eventos")
@@ -21,6 +34,8 @@ export async function getEventById(idEvent) {
   return data;
 }
 export async function getEventosCercanos(lat, lon, radio = 5000) {
+  console.log("lat: ", lat);
+  console.log("ln: ", lon);
   const { data, error } = await supabase.rpc("get_events_nearby", {
     p_lon: lon,
     p_lat: lat,
@@ -96,4 +111,38 @@ export async function createEvent(input) {
 
   if (error) return new Error(error.message);
   return data;
+}
+
+export async function inscribirse(eventoId, userId) {
+  const { data, error } = await supabase
+    .from("inscripciones")
+    .insert([
+      {
+        id_evento: eventoId,
+        id_usuario: userId,
+        fecha_inscripcion: new Date().toISOString(),
+      },
+    ])
+    .select("*")
+    .single();
+  if (error) return new Error(error.message);
+
+  return data;
+}
+export async function verificarInscripcionUsuario(eventoId, userId) {
+  const { data, error } = await supabase
+    .from("inscripciones")
+    .select("*")
+    .eq("id_evento", eventoId)
+    .eq("id_usuario", userId)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      // No se encontró el registro
+      return false;
+    }
+    return new Error(error.message);
+  }
+  return !!data;
 }
