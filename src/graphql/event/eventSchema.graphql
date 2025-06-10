@@ -1,8 +1,3 @@
-type Categoria {
-  id: ID!
-  nombre: String!
-  descripcion: String!
-}
 
 
 
@@ -51,7 +46,8 @@ type Query {
   eventosPorCategoria(categoria: String!): [Evento]
   eventosCercanos(lat: Float!, lon: Float!, radio: Int): [Evento]
   UsuariosInscritosAUnEvento(idEvento: ID!): [Usuario] 
-  # Faltas las queries para obtener los eventos por categoria, por usuario, por ubicacion
+
+
 }
 type Inscripcion{
   id_evento:ID!
@@ -61,6 +57,7 @@ type Inscripcion{
 type Mutation {
   createEvent(input: CreateEventInput!): Evento!
   inscribirse(eventoId:ID):Inscripcion!
+  anularInscripcion(eventoId:ID,usuarioId:ID):Boolean!
 }
 
 input CreateEventInput {
@@ -74,7 +71,7 @@ input CreateEventInput {
   requiere_voluntarios: Boolean!
   cantidad_participantes_requeridos: Int
   image_url: String
-  categoria: String!
+  categoria: Int!
   materiales_requeridos: String
   habilidades_requeridas: String
   requisitos_adicionales: String

@@ -1,5 +1,5 @@
 import { eventResolver } from "./event/eventResolver.js";
-
+import { categoryResolver } from "./category/categoryResolver.js";
 import { userResolver } from "./user/userResolver.js";
 
 import { taskResolver } from "./Tasks/taskResolver.js";
@@ -26,4 +26,5 @@ export const rootResolver = mergeResolvers([
   taskResolver,
   eventSubscriptions,
   userResolver,
+  categoryResolver
 ]);

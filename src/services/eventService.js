@@ -170,3 +170,7 @@ export async function verificarInscripcionUsuario(eventoId, userId) {
   }
   return !!data;
 }
+export async function anularInscripcion(eventoId,userId){
+  const {error} = await supabase.from('inscripciones').delete().eq('id_evento',eventoId).eq('id_usuario',userId)
+  return !error;
+}

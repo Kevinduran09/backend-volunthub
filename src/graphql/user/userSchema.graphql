@@ -15,7 +15,7 @@ type Usuario {
 type Query {
   usuario(id: ID!): Usuario
   usuarios(busqueda: String): [Usuario]
-  eventosInscritosPorUsuario(idUsuario: ID!): [Evento]
+  eventosInscritosPorUsuario(idUsuario: ID): [Evento]
 }
 
 

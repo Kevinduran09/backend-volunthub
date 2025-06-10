@@ -10,3 +10,12 @@ export async function getCategoryyId(idCategory) {
 
   return data;
 }
+
+export async function getAllCategories() {
+  const { data, error } = await supabase
+    .from("categorias")
+    .select("*");
+  
+  if (error) return new Error(error.message);
+  return data;
+}

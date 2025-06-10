@@ -13,11 +13,10 @@ input TareaInput {
   nombre: String!
   prioridad: String!
   descripcion: String!
-  estado: String!
 }
 
 type Mutation {
-  completarTarea(idTarea: ID!, idUsuario: ID!): Boolean!
+  completarTarea(idTarea: ID!, idUsuario: ID): Boolean!
 }
 
 type Query {

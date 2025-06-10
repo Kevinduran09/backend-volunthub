@@ -8,8 +8,9 @@ export const taskResolver = {
     },
   },
   Mutation: {
-    completarTarea: async (_, { idTarea, idUsuario }) => {
-      const tarea = await taskService.completarTarea(idTarea, idUsuario);
+    completarTarea: async (_, { idTarea, idUsuario },{userId}) => {
+      const id = userId || idUsuario
+      const tarea = await taskService.completarTarea(idTarea, id);
       return tarea;
     },
   },

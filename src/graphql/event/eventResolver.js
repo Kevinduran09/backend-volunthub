@@ -23,6 +23,7 @@ export const eventResolver = {
     UsuariosInscritosAUnEvento: async (root, { idEvento }) => {
       return await eventService.getUsuariosInscritosPorEvento(idEvento);
     },
+   
   },
   Evento: {
     ubicacion: async (root) => {
@@ -65,5 +66,9 @@ export const eventResolver = {
       console.log("user id", userId);
       return await eventService.inscribirse(eventoId, userId);
     },
+    anularInscripcion:async (root,{eventoId,usuarioId},{userId})=>{
+    const id = usuarioId || userId;
+      return await eventService.anularInscripcion(eventoId, id);
+    }
   },
 };

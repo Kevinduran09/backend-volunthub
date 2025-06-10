@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    container_name: volunt-hub-backend
+    env_file:
+      - .env
+    ports:
+      - "9001:9001"
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine
+    container_name: volunt-hub-redis
+    ports:
+      - "6379:6379"

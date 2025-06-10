@@ -12,8 +12,9 @@ export const userResolver = {
             return users;
         },
 
-        eventosInscritosPorUsuario: async (root, { idUsuario }) => {
-            return await userService.getEventosInscritosPorUsuario(idUsuario);
+        eventosInscritosPorUsuario: async (root, { idUsuario },{userId}) => {
+            const id = idUsuario || userId;
+            return await userService.getEventosInscritosPorUsuario(id);
         },
     },
 
